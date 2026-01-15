@@ -17,8 +17,27 @@ Early implementation of the Commute Experiment app spec. This repo contains a Ty
 - `services/` trial lifecycle, geofence registration, notifications, permissions
 - `ui/` starter screens (placeholders)
 
+## Run the app (iOS)
+
+```bash
+cd app
+npm install
+npx expo start --ios
+```
+
+## Analysis scripts
+
+Python analysis scripts live in `/analysis` and use `uv` for dependency management.
+
+```bash
+cd analysis
+uv venv
+uv sync
+python export_summary.py /path/to/unzipped
+```
+
 ## Next steps
 
-- Initialize an Expo app and wire these modules into `App.tsx`
-- Add a map-based place editor and region catalog storage
-- Add export bundle creation using `expo-file-system` + zip helper
+- Add route labeling UX (assign evidence regions to routes)
+- Improve trial history and analytics screens
+- Add automated test harness for inference + metrics

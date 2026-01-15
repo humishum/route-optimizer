@@ -209,6 +209,11 @@ export async function listEventsForTrial(
   return result.rows._array.map(mapEventRow);
 }
 
+export async function listAllEvents(db: SQLite.SQLiteDatabase): Promise<RegionEvent[]> {
+  const result = await executeSqlAsync(db, "SELECT * FROM region_events ORDER BY t ASC");
+  return result.rows._array.map(mapEventRow);
+}
+
 export async function listTrackpointsForTrial(
   db: SQLite.SQLiteDatabase,
   trialId: string,
@@ -219,6 +224,19 @@ export async function listTrackpointsForTrial(
     [trialId],
   );
   return result.rows._array.map(mapTrackPointRow);
+}
+
+export async function listAllTrackpoints(db: SQLite.SQLiteDatabase): Promise<TrackPoint[]> {
+  const result = await executeSqlAsync(db, "SELECT * FROM trackpoints ORDER BY t ASC");
+  return result.rows._array.map(mapTrackPointRow);
+}
+
+export async function listTrials(db: SQLite.SQLiteDatabase): Promise<Trial[]> {
+  const result = await executeSqlAsync(
+    db,
+    "SELECT * FROM trials ORDER BY started_at DESC",
+  );
+  return result.rows._array.map(mapTrialRow);
 }
 
 function executeSqlAsync(

@@ -31,3 +31,13 @@ export async function notifyTrialEnd(placeName: string, summary: string): Promis
     trigger: null,
   });
 }
+
+export async function notifyGeofenceHit(label: string): Promise<void> {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Geofence entered",
+      body: label,
+    },
+    trigger: null,
+  });
+}

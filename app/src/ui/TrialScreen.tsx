@@ -1,14 +1,15 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
+import { setIntentForActiveTrial } from "../services/trialManager";
 
 export function TrialScreen(): JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Active Trial</Text>
       <View style={styles.intentRow}>
-        <Button title="A" onPress={() => {}} />
-        <Button title="B" onPress={() => {}} />
-        <Button title="C" onPress={() => {}} />
+        <Button title="A" onPress={() => setIntentForActiveTrial("A")} />
+        <Button title="B" onPress={() => setIntentForActiveTrial("B")} />
+        <Button title="C" onPress={() => setIntentForActiveTrial("C")} />
       </View>
       <Button title="Discard Trial" onPress={() => {}} />
     </View>

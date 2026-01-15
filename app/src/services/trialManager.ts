@@ -21,7 +21,12 @@ import {
   updateTrial,
 } from "../db/queries";
 import { parseRegionIdentifier } from "./geofences";
-import { configureNotificationActions, notifyTrialEnd, notifyTrialStart } from "./notifications";
+import {
+  configureNotificationActions,
+  notifyGeofenceHit,
+  notifyTrialEnd,
+  notifyTrialStart,
+} from "./notifications";
 import { angleDiffDeg } from "../domain/geospatial";
 
 let dbPromise: ReturnType<typeof openDatabase> | undefined;
@@ -46,6 +51,12 @@ export async function handleGeofenceEvent(
   const parsed = parseRegionIdentifier(identifier);
   if (!parsed) {
     return;
+  }
+
+  if (eventType === Location.GeofencingEventType.Enter) {
+    const place = await getPlaceById(await getDb(), parsed.placeId);
+    const label = place ? `${place.name} • ${parsed.kind}` : `${parsed.placeId} • ${parsed.kind}`;
+    await notifyGeofenceHit(label);
   }
 
   if (eventType === Location.GeofencingEventType.Enter) {
@@ -91,6 +102,16 @@ export async function handleLocationUpdate(
 export async function setIntent(trialId: string, intent: string): Promise<void> {
   const db = await getDb();
   const trial = await loadTrial(db, trialId);
+  if (!trial || trial.status !== "active") {
+    return;
+  }
+  trial.intent = intent;
+  await updateTrial(db, trial);
+}
+
+export async function setIntentForActiveTrial(intent: string): Promise<void> {
+  const db = await getDb();
+  const trial = await findAnyActiveTrial(db);
   if (!trial || trial.status !== "active") {
     return;
   }

@@ -1,0 +1,35 @@
+{
+  "name": "commute-experiment",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo start --ios",
+    "android": "expo start --android",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-navigation/bottom-tabs": "latest",
+    "@react-navigation/native": "latest",
+    "@react-navigation/native-stack": "latest",
+    "expo": "latest",
+    "expo-file-system": "latest",
+    "expo-location": "latest",
+    "expo-notifications": "latest",
+    "expo-sharing": "latest",
+    "expo-sqlite": "latest",
+    "expo-task-manager": "latest",
+    "jszip": "latest",
+    "react": "latest",
+    "react-native": "latest",
+    "react-native-maps": "latest",
+    "react-native-safe-area-context": "latest",
+    "react-native-screens": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-native": "latest",
+    "typescript": "latest"
+  }
+}
