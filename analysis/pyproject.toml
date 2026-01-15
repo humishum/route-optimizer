@@ -1,0 +1,14 @@
+[project]
+name = "commute-analysis"
+version = "0.1.0"
+description = "Analysis scripts for commute experiment exports"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "pandas",
+  "matplotlib",
+  "seaborn",
+]
+
+[tool.uv]
+package = false
