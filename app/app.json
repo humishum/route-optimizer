@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Commute Experiment",
+    "slug": "commute-experiment",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "commute-experiment",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Track commute trials using geofences and GPS.",
+        "NSLocationAlwaysUsageDescription": "Track commute trials using geofences and GPS.",
+        "NSLocationWhenInUseUsageDescription": "Track commute trials when the app is open.",
+        "NSMotionUsageDescription": "Improve drive detection for trial tracking.",
+        "UIBackgroundModes": ["location", "fetch", "remote-notification"]
+      }
+    },
+    "plugins": ["expo-location", "expo-notifications"]
+  }
+}

@@ -1,0 +1,2 @@
+export const TASK_GEOFENCE = "TASK_GEOFENCE";
+export const TASK_LOCATION = "TASK_LOCATION";
