@@ -33,11 +33,15 @@ export async function notifyTrialEnd(placeName: string, summary: string): Promis
 }
 
 export async function notifyGeofenceHit(label: string): Promise<void> {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "Geofence entered",
-      body: label,
-    },
-    trigger: null,
-  });
+  try {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Geofence entered",
+        body: label,
+      },
+      trigger: null,
+    });
+  } catch (error) {
+    console.warn("Geofence notification skipped:", error);
+  }
 }

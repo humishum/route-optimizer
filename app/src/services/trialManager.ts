@@ -169,13 +169,17 @@ async function startTrial(placeId: string, timestampMs: number): Promise<void> {
 
   await insertTrial(db, trial);
 
-  await Location.startLocationUpdatesAsync(TASK_LOCATION, {
-    accuracy: Location.Accuracy.BestForNavigation,
-    timeInterval: 1000,
-    distanceInterval: 5,
-    activityType: Location.ActivityType.AutomotiveNavigation,
-    showsBackgroundLocationIndicator: false,
-  });
+  try {
+    await Location.startLocationUpdatesAsync(TASK_LOCATION, {
+      accuracy: Location.Accuracy.BestForNavigation,
+      timeInterval: 1000,
+      distanceInterval: 5,
+      activityType: Location.ActivityType.AutomotiveNavigation,
+      showsBackgroundLocationIndicator: false,
+    });
+  } catch (error) {
+    console.warn("Location updates unavailable:", error);
+  }
 
   await configureNotificationActions(place.routeDefs.map((route) => route.id));
   await notifyTrialStart(place.name);
@@ -194,7 +198,11 @@ async function endTrial(placeId: string, timestampMs: number): Promise<void> {
 
   trial.endedAt = timestampMs;
 
-  await Location.stopLocationUpdatesAsync(TASK_LOCATION);
+  try {
+    await Location.stopLocationUpdatesAsync(TASK_LOCATION);
+  } catch (error) {
+    console.warn("Stop location updates failed:", error);
+  }
 
   const events = await listEventsForTrial(db, trial.id);
   const trackpoints = await listTrackpointsForTrial(db, trial.id);

@@ -4,14 +4,19 @@ import { buildGeofenceRegions, registerGeofences } from "./geofences";
 import { loadPlaces } from "./placeStore";
 
 export async function refreshGeofences(): Promise<void> {
-  const places = await loadPlaces();
-  const regions = buildGeofenceRegions(places);
-  if (regions.length === 0) {
-    const started = await Location.hasStartedGeofencingAsync(TASK_GEOFENCE);
-    if (started) {
-      await Location.stopGeofencingAsync(TASK_GEOFENCE);
+  try {
+    const places = await loadPlaces();
+    const regions = buildGeofenceRegions(places);
+    if (regions.length === 0) {
+      const started = await Location.hasStartedGeofencingAsync(TASK_GEOFENCE);
+      if (started) {
+        await Location.stopGeofencingAsync(TASK_GEOFENCE);
+      }
+      return;
     }
-    return;
+    await registerGeofences(regions);
+  } catch (error) {
+    // Geofencing may be unavailable in Expo Go or simulators.
+    console.warn("Geofence registration skipped:", error);
   }
-  await registerGeofences(regions);
 }

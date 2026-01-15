@@ -44,8 +44,9 @@ export default function App(): JSX.Element {
         if (!granted) {
           return;
         }
-        return refreshGeofences();
+        return refreshGeofences().catch(() => {});
       })
+      .catch(() => {})
       .finally(() => setReady(true));
 
     return () => {
